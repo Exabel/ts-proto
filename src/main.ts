@@ -384,7 +384,7 @@ function generateConstEnum(
 ): CodeBlock {
   let code = CodeBlock.empty();
   maybeAddComment(sourceInfo, (text) => (code = code.add(`/** %L */\n`, text)));
-  code = code.beginControlFlow('type %L =', fullName);
+  code = code.beginControlFlow('export const %L =', fullName);
 
   enumDesc.value.forEach((valueDesc, index) => {
     const info = sourceInfo.lookup(Fields.enum.value, index);

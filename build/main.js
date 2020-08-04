@@ -247,7 +247,7 @@ function generateEnum(options, fullName, enumDesc, sourceInfo) {
 function generateConstEnum(options, fullName, enumDesc, sourceInfo) {
     let code = ts_poet_1.CodeBlock.empty();
     utils_1.maybeAddComment(sourceInfo, (text) => (code = code.add(`/** %L */\n`, text)));
-    code = code.beginControlFlow('type %L =', fullName);
+    code = code.beginControlFlow('export const %L =', fullName);
     enumDesc.value.forEach((valueDesc, index) => {
         const info = sourceInfo.lookup(sourceInfo_1.Fields.enum.value, index);
         utils_1.maybeAddComment(info, (text) => (code = code.add(`/** ${valueDesc.name} - ${text} */\n`)));
