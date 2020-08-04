@@ -65,6 +65,7 @@ export enum OneofOption {
 }
 
 export type Options = {
+  simpleEnums: boolean;
   useContext: boolean;
   snakeToCamel: boolean;
   forceLong: LongOption;
@@ -368,9 +369,22 @@ function generateEnum(
   enumDesc: EnumDescriptorProto,
   sourceInfo: SourceInfo
 ): CodeBlock {
+  if (options.simpleEnums) {
+    return generateSimpleEnum(options, fullName, enumDesc, sourceInfo);
+  } else {
+    return generateConstEnum(options, fullName, enumDesc, sourceInfo);
+  }
+}
+
+function generateConstEnum(
+  options: Options,
+  fullName: string,
+  enumDesc: EnumDescriptorProto,
+  sourceInfo: SourceInfo
+): CodeBlock {
   let code = CodeBlock.empty();
   maybeAddComment(sourceInfo, (text) => (code = code.add(`/** %L */\n`, text)));
-  code = code.beginControlFlow('export const %L =', fullName);
+  code = code.beginControlFlow('type %L =', fullName);
 
   enumDesc.value.forEach((valueDesc, index) => {
     const info = sourceInfo.lookup(Fields.enum.value, index);
@@ -391,6 +405,21 @@ function generateEnum(
   code = code.add('export type %L = %L;', fullName, enumTypes.join(' | '));
   code = code.add('\n');
 
+  return code;
+}
+
+function generateSimpleEnum(
+  options: Options,
+  fullName: string,
+  enumDesc: EnumDescriptorProto,
+  sourceInfo: SourceInfo
+): CodeBlock {
+  let code = CodeBlock.empty();
+  maybeAddComment(sourceInfo, (text) => (code = code.add(`/**\n * %L */\n`, text)));
+  const enumTypes = [...enumDesc.value.map((v) => `"${v.name}"`), `"${UNRECOGNIZED_ENUM_NAME}"`];
+  code = code.add('export type %L =\n  %L;', fullName, enumTypes.join(' |\n  '));
+  code = code.add('\n');
+  
   return code;
 }
 
