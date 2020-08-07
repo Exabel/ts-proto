@@ -278,7 +278,7 @@ const valueTypes = {
     '.google.protobuf.BytesValue': ts_poet_1.TypeNames.anyType('Uint8Array'),
 };
 const mappedTypes = {
-    '.google.protobuf.Timestamp': ts_poet_1.TypeNames.DATE,
+    '.google.protobuf.Timestamp': ts_poet_1.TypeNames.STRING,
 };
 function isTimestamp(field) {
     return field.typeName === '.google.protobuf.Timestamp';
