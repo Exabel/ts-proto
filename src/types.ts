@@ -293,6 +293,7 @@ const valueTypes: { [key: string]: TypeName } = {
 
 const mappedTypes: { [key: string]: TypeName } = {
   '.google.protobuf.Timestamp': TypeNames.STRING,
+  '.google.protobuf.Struct': TypeNames.anyType('{ [key: string]: any }'),
 };
 
 export function isTimestamp(field: FieldDescriptorProto): boolean {
