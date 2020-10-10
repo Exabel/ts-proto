@@ -299,9 +299,11 @@ function generateEnumToJson(fullName, enumDesc) {
     body = body.add('default:%>\n').addStatement('return "UNKNOWN"%<').endControlFlow();
     return func.addCodeBlock(body);
 }
-// When useOptionals=true, non-scalar fields are translated into optional properties.
+// When useOptionals=true, non-array fields are translated into optional properties.
 function isOptionalProperty(field, options) {
-    return (options.useOptionals && types_1.isMessage(field) && !types_1.isRepeated(field)) || (options.useOptionals && types_1.isWithinOneOf(field)) || (types_1.isPrimitive(field));
+    return (options.useOptionals && types_1.isMessage(field) && !types_1.isRepeated(field))
+        || (options.useOptionals && types_1.isWithinOneOf(field) && options.oneof === OneofOption.PROPERTIES)
+        || (types_1.isPrimitive(field));
 }
 // Create the interface with properties
 function generateInterfaceDeclaration(typeMap, fullName, messageDesc, sourceInfo, options) {

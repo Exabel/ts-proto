@@ -383,7 +383,7 @@ export function toTypeName(
   // union with `undefined` here, either.
   if (
     (!isWithinOneOf(field) && isMessage(field) && !options.useOptionals) ||
-    (isWithinOneOf(field) && options.oneof === OneofOption.PROPERTIES)
+    (isWithinOneOf(field) && options.oneof === OneofOption.PROPERTIES && !options.useOptionals)
   ) {
     return TypeNames.unionType(type, TypeNames.UNDEFINED);
   }

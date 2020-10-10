@@ -451,9 +451,11 @@ function generateEnumToJson(fullName: string, enumDesc: EnumDescriptorProto): Fu
   return func.addCodeBlock(body);
 }
 
-// When useOptionals=true, non-scalar fields are translated into optional properties.
+// When useOptionals=true, non-array fields are translated into optional properties.
 function isOptionalProperty(field: FieldDescriptorProto, options: Options): boolean {
-  return (options.useOptionals && isMessage(field) && !isRepeated(field)) || (options.useOptionals && isWithinOneOf(field)) || (isPrimitive(field));
+  return (options.useOptionals && isMessage(field) && !isRepeated(field))
+    || (options.useOptionals && isWithinOneOf(field) && options.oneof === OneofOption.PROPERTIES)
+    || (isPrimitive(field));
 }
 
 // Create the interface with properties

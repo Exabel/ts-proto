@@ -354,7 +354,7 @@ function toTypeName(typeMap, messageDesc, field, options) {
     // clause, spelling each option out inside a large type union. No need for
     // union with `undefined` here, either.
     if ((!isWithinOneOf(field) && isMessage(field) && !options.useOptionals) ||
-        (isWithinOneOf(field) && options.oneof === main_1.OneofOption.PROPERTIES)) {
+        (isWithinOneOf(field) && options.oneof === main_1.OneofOption.PROPERTIES && !options.useOptionals)) {
         return ts_poet_1.TypeNames.unionType(type, ts_poet_1.TypeNames.UNDEFINED);
     }
     return type;
