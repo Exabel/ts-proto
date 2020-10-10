@@ -278,6 +278,7 @@ const valueTypes = {
     '.google.protobuf.BytesValue': ts_poet_1.TypeNames.anyType('Uint8Array'),
 };
 const mappedTypes = {
+    '.google.protobuf.Duration': ts_poet_1.TypeNames.STRING,
     '.google.protobuf.Timestamp': ts_poet_1.TypeNames.STRING,
     '.google.protobuf.Struct': ts_poet_1.TypeNames.anyType('{ [key: string]: any }'),
 };
